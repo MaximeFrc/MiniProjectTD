@@ -82,14 +82,14 @@ public class ScorePanel extends JPanel implements ActionListener {
 		
 		/*Creation of the nb of lives display*/
 		nbLivesT = new JLabel("Remaining lives : ");
-		nbLivesT.setBounds(750,25,150,20);
+		nbLivesT.setBounds(750,25,180,20);
 		nbLivesT.setBackground(new Color(0,0,0,128));
 		nbLivesT.setForeground(Color.WHITE);
 		nbLivesT.setFont(font);
 		add(nbLivesT);
 		
 		/*Creation of the nb of wave display*/
-		nbWaveT = new JLabel("Wave number ");
+		nbWaveT = new JLabel("Wave number : ");
 		nbWaveT.setBounds(750,60,150,20);
 		nbWaveT.setBackground(new Color(0,0,0,128));
 		nbWaveT.setForeground(Color.WHITE);
@@ -103,11 +103,23 @@ public class ScorePanel extends JPanel implements ActionListener {
 	}
 	
 	public void displayTime (int time) {
-		timeTF.setText("Time = "+ time/20 + " s ");
+		timeTF.setText("Time : "+ time/20 + " s ");
 	}
 	
 	public void displayScore (int score) {
-		//scoreTF.setText("Score = "+ score);
+		scoreTF.setText("Score : "+ score);
+	}
+	
+	public void displayWave (int wave) {
+		nbWaveT.setText("Wave number : "+ wave);
+	}
+	
+	public void displayLives (int lives) {
+		nbLivesT.setText("Remaining lives : "+ lives);
+	}
+	
+	public void displayMoney (int money) {
+		moneyT.setText("Money : "+ money);
 	}
 	
 	public void actionPerformed(ActionEvent e ) {

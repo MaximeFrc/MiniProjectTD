@@ -33,11 +33,9 @@ public class Minion {
 	}
 	
 	public void update() {
-		//System.out.println("Ma position : ("+getX()+";"+getY()+")");
 		if (avance < path.length) {
 			if (this.position.equals(path[avance].position)) {
 				avance++;
-				//System.out.println("change avance");
 			}
 			if (avance < path.length) {
 				if (path[avance-1].getX() < path[avance].getX()) {

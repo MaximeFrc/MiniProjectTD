@@ -11,6 +11,8 @@ public class Case {
 	public boolean path;
 	public Image img;
 	public Tour tour;
+	public boolean thereIsTower;
+	public boolean towerIsActive;
 	
 	public Case(int x, int y) {
 		this.position = new Point(x,y);
@@ -22,10 +24,29 @@ public class Case {
 			System.exit(0);    
        }
 		this.tour = null;
+		thereIsTower = false;
 	}
 	
 	public void addTour(Tour t) {
-		this.tour = t;
+		if (!path) {
+			img = t.img;
+			this.tour = t;
+			thereIsTower = true;
+		}
+		
+	}
+	
+	public void removeTour () {
+		if(!path) {
+			try {
+				img= ImageIO.read(new File("caseBasic.png")); 
+			} catch(Exception err) {
+				System.out.println("caseBasic.png not found !");            
+				System.exit(0);    
+			}
+			this.tour = null;
+			thereIsTower=false;
+		}
 	}
 	
 	public void setPath() {

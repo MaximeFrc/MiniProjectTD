@@ -2,15 +2,21 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import javax.imageio.ImageIO;
+import java.io.File;
 
-public class Interface extends JPanel implements ActionListener{
+public class Interface extends JPanel implements ActionListener,MouseListener{
 	
 	/*Components of the interface */
 	JPanel towerMenu;
 	JButton pause;
 	JButton sendMinions;
-	JTextField towerMenuTitle;
-	
+	JButton upgradeTower;
+	JButton deleteTower;
+	JLabel towerMenuTitle;
+	JLabel description;
+	ImageIcon imgIc;
+	JButton[] towerTabButton;
 	Graphics buffer; 
 	Image wallpaper;
 	BufferedImage background;
@@ -21,11 +27,14 @@ public class Interface extends JPanel implements ActionListener{
 	int widthITF;
 	int heightITF;
 	TowerDefense td;
+	int numTowerChosen=-1;
+	Image imgPurchasedTower;
 	
 	public Interface (int width, int height, String image, TowerDefense td) {
 		
 		this.widthITF = 300;
 		this.heightITF = height-100;
+		Font font = new java.awt.Font("MAGNETO",Font.BOLD,15);
 		
 		/* identification JFrame */
 		this.td = td;
@@ -37,24 +46,59 @@ public class Interface extends JPanel implements ActionListener{
 		
 		/*Tower Menu initialisation*/
 		towerMenu = new JPanel();
-		towerMenu.setBounds(10,50,280,400);
-		towerMenuTitle = new JTextField("Tower Menu");
-		towerMenuTitle.setBounds(80,20,140,30);
+		towerMenu.setBounds(50,30,200,200);
+		towerMenu.setLayout(new GridLayout(4,2));
+		towerMenuTitle = new JLabel("Tower Menu");
+		towerMenuTitle.setBounds(110,10,140,20);
 		this.add(towerMenuTitle);
 		this.add(towerMenu);
 		
+				
+		/*Description text field*/
+		description = new JLabel("Description :");
+		description.setBounds(60,240,180,150);
+		description.setBackground(new Color(100,0,0,128));
+		description.setForeground(Color.WHITE);
+		description.setFont(font);
+		add(description);
+		
 		/*Pause button creation*/
 		pause = new JButton("PAUSE");
-		pause.setBounds(160,470,130,80);
+		pause.setBounds(160,490,130,80);
 		this.add(pause);
 		pause.addActionListener(this);
 
-		
 		/*Send Minions button creation */ 
 		sendMinions = new JButton("SEND MINIONS");
-		sendMinions.setBounds(10,470,130,80);
+		sendMinions.setBounds(10,490,130,80);
 		this.add(sendMinions);
 		sendMinions.addActionListener(this);
+		
+		
+		/*Upgrade Tower button creation */ 
+		upgradeTower = new JButton("UPGRADE TOWER");
+		upgradeTower.setBounds(10,400,140,80);
+		this.add(upgradeTower);
+		upgradeTower.addActionListener(this);
+		
+		
+		/*Delete Tower button creation */ 
+		deleteTower = new JButton("DELETE TOWER");
+		deleteTower.setBounds(150,400,140,80);
+		this.add(deleteTower);
+		sendMinions.addActionListener(this);
+		
+		
+		/*Creation of the towers buttons*/
+		towerTabButton =new JButton[8];
+		for(int i=0;  i<towerTabButton.length;i++) {
+			int j = i+1;
+			imgIc= new ImageIcon("tower"+Integer.toString(j)+".png");
+			towerTabButton[i] = new JButton(imgIc);
+			towerMenu.add(towerTabButton[i]);
+			towerTabButton[i].addMouseListener(this);
+		}
+		
 		
 		/*Creation of the tool to get images*/
 		Toolkit T=Toolkit.getDefaultToolkit();
@@ -80,14 +124,7 @@ public class Interface extends JPanel implements ActionListener{
 				pause.setText("RESUME");
 			}
 		}
-		else if (e.getSource() == sendMinions) {
-			/*
-			 * if (!isThereMinions) 
-			 * 		send new wave
-			 * else 
-			 * 		do nothing
-			 * */
-			 
+		if (e.getSource() == sendMinions) {
 			boolean thereIsMinions = false;
 			for (int i = 0; i<td.tabMinion.length ; i++) {
 				if (td.tabMinion[i].position!=null) {
@@ -99,12 +136,60 @@ public class Interface extends JPanel implements ActionListener{
 				td.minionToCreate = 0;
 				td.creatingMinions = true;
 			}		
-		}	
+		}
+		
+		if (e.getSource() == upgradeTower) {
+			if(numTowerChosen!=-1) {
+				int price = 0;
+				if(td.selectedTower().numUpgrade==0) {
+					price = td.selectedTower().priceUpgrade1;
+				} else if (td.selectedTower().numUpgrade==1) {
+					price = td.selectedTower().priceUpgrade2;
+				}
+				if (td.money >= price) {
+					td.selectedTower().upgrade();
+					description.setText("<html> Description : <br>"+td.selectedTower()+" </html>");
+					td.money -= price;
+				}
+			}	
+		}
+		
+		if (e.getSource() == deleteTower) {
+			// delete the tower a the last position clicked	
+		}
+			
+		
 	}
 	
 	public void paintComponent(Graphics g) {
 		buffer.drawImage( wallpaper,0,0, widthITF,heightITF,  this); 
 		g.drawImage(background, 0,0,widthITF,heightITF, this);
 	}
+	
+	public void mousePressed(MouseEvent e) {
+		for(int i=0; i<towerTabButton.length;i++) {
+				if(numTowerChosen==-1 && towerTabButton[i] == e.getSource()){
+					towerTabButton[i].setBackground(new Color(30,55,112));
+					numTowerChosen =i+1;
+					try {
+						int j= i+1;
+						imgPurchasedTower= ImageIO.read(new File("tower"+Integer.toString(j)+".png")); 
+					} catch(Exception err) {
+						System.out.println(" not found !");            
+						System.exit(0);    
+					}
+					description.setText("<html> Description : <br>"+td.selectedTower()+" </html>");
+				}
+				else if(numTowerChosen == i+1 && towerTabButton[i] == e.getSource()){
+					numTowerChosen =-1;
+					towerTabButton[i].setBackground(null);
+				}
+		}
+	}
+	
+	public void mouseEntered( MouseEvent e )  {}
+	public void mouseClicked (MouseEvent e) {}
+	public void mouseReleased (MouseEvent e) {}
+	public void mouseExited (MouseEvent e) {}
 }
 

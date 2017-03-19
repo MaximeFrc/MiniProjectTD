@@ -2,8 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.util.ArrayList;
 
-public class TowerDefense extends JFrame implements ActionListener{
+public class TowerDefense extends JFrame implements ActionListener,MouseListener,MouseMotionListener{
 	
 	/*Parameters of the window*/
 	int width = 1008;
@@ -15,6 +18,9 @@ public class TowerDefense extends JFrame implements ActionListener{
 	GamePanel gamePanel;
 	ScorePanel scorePanel;
 	
+	//JPanel purchasedTower;
+	
+	
 	/*Timer */
 	Timer timer;
 	int temps =0;
@@ -23,8 +29,17 @@ public class TowerDefense extends JFrame implements ActionListener{
 	Minion tabMinion [];
 	int level;
 	int nbLives;
+	int money;
+	int score;
 	boolean creatingMinions;
 	int minionToCreate;
+	Tour chosenTower;
+	ArrayList<Shoot> shootList;
+	
+	int buttonPressed;
+	
+	int ximg;
+	int yimg;
 
 	
 	public TowerDefense (int path, int difficulty) {
@@ -40,8 +55,11 @@ public class TowerDefense extends JFrame implements ActionListener{
 		
 		/*beginning of the party*/
 		nbLives = 50;
-		level=0;
+		money = 500;
+		score = 0;
+		level = 0;
 		creatingMinions = false;
+		shootList = new ArrayList();
 		tabMinion = new Minion[1];
 		tabMinion[0] = new Minion("Minion1", 500, 4, "minion1.png");;
 		
@@ -69,6 +87,15 @@ public class TowerDefense extends JFrame implements ActionListener{
 		timer = new Timer (50, this);
 		timer.start();
 		
+		/*Test de tour*/
+		chosenTower=Tour.TOUR1;
+		
+		
+		this.addMouseMotionListener(this);
+		gamePanel.addMouseMotionListener(this);
+		for(int i=0; i<interf.towerTabButton.length;i++) {
+			interf.towerTabButton[i].addMouseMotionListener(this);
+		}
 		
 	}
 	
@@ -109,12 +136,15 @@ public class TowerDefense extends JFrame implements ActionListener{
 		if(interf.isPause) {
 			temps++; 
 			scorePanel.displayTime(temps);
+			scorePanel.displayWave(level);
+			scorePanel.displayLives(nbLives);
+			scorePanel.displayMoney(money);
+			scorePanel.displayScore(score);
 		
 		/* Create new minions */
 		if (temps%10 == 0) {
 			if (creatingMinions) {
 				tabMinion[minionToCreate].create(gamePanel.p.path);
-				System.out.println("create "+ minionToCreate);
 				minionToCreate++;
 				if (minionToCreate >= tabMinion.length) {
 					creatingMinions = false;
@@ -126,7 +156,6 @@ public class TowerDefense extends JFrame implements ActionListener{
 			
 		for (int i = 0; i < tabMinion.length ; i++) {
 			if (tabMinion[i].position!=null) {
-				System.out.println("position de : " + i +": ("+tabMinion[i].getX()+";"+tabMinion[i].getY()+")");
 				tabMinion[i].update();
 				if (tabMinion[i].position.equals(gamePanel.p.path[gamePanel.p.path.length-1].position)) {
 					tabMinion[i].position=null;
@@ -134,10 +163,77 @@ public class TowerDefense extends JFrame implements ActionListener{
 				}	
 			}
 		}
+		
+		/* Kill the minions */
+		shootList = new ArrayList();
+		for (int i = 0; i < gamePanel.tabCase.length ; i++) {
+			for (int j = 0; j < gamePanel.tabCase[0].length ; j++) {
+				if (gamePanel.tabCase[i][j].tour != null &&gamePanel.tabCase[i][j].towerIsActive ) {
+					for (int k = 0; k < tabMinion.length ; k++) {
+						if (tabMinion[k].position != null) {
+							gamePanel.tabCase[i][j].tour.setPosition(gamePanel.tabCase[i][j]);
+						if (gamePanel.tabCase[i][j].tour.range.contains(tabMinion[k].position)) {
+							Shoot sh = new Shoot(gamePanel.tabCase[i][j], tabMinion[k]);
+							shootList.add(sh);
+							if (sh.killingShoot) {
+								score += 10 * level;
+								money += 10 * level;
+							}
+							
+							break;
+						}
+						}
+					}
+				}
+			}
+		}
+		
 			//scorePanel.displayScore(Player.score);
 			repaint();
 		}
     }
+    
+    public void mouseEntered( MouseEvent e )  {}
+	public void mouseDragged( MouseEvent e ) {
+		//condition si c'est sur les boutons
+		ximg = (int)(e.getPoint().getX()+this.getLocationOnScreen().getX()); //ajouter coord par rapport à l'écran
+		yimg = (int)(e.getPoint().getY()+this.getLocationOnScreen().getY());
+		
+		System.out.println("x : "+ximg+" y : "+yimg);
+	}
+	public void mousePressed (MouseEvent e) {}
+	public void mouseClicked (MouseEvent e) {}
+	public void mouseReleased (MouseEvent e) {}
+	public void mouseExited (MouseEvent e) {}
+	public void mouseMoved( MouseEvent e ) { }
 	
+	public void paintComponent(Graphics g) {
+		g.drawImage(interf.imgPurchasedTower, ximg-(int)this.getLocationOnScreen().getX(), yimg-(int)this.getLocationOnScreen().getY(), this);
+	}
+	
+	public Tour selectedTower () {
+		Tour t=Tour.TOUR1;
+		switch (interf.numTowerChosen) {
+			case 1 : t= Tour.TOUR1;
+				break;
+			case 2: t= Tour.TOUR2;
+				break;
+			case 3 : t= Tour.TOUR3;
+				break;
+			case 4: t=Tour.TOUR4;
+				break;
+			case 5 : t= Tour.TOUR5;
+				break;
+			case 6 : t= Tour.TOUR6;
+				break;
+			case 7 : t= Tour.TOUR7;
+				break;
+			case 8 : t= Tour.TOUR8;
+				break;
+			default : 
+				break;
+		}
+		return t;
+	}
 }
 

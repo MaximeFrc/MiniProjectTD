@@ -136,7 +136,6 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.print("Bonjour, je suis le bouton ");
 		if (e.getSource() == monBoutonPath1) 
 			new TowerDefense(1,boxNiveau.getSelectedIndex());
 		
