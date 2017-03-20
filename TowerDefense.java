@@ -142,7 +142,7 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 			scorePanel.displayScore(score);
 		
 		/* Create new minions */
-		if (temps%(10*(5-tabMinion[0].speed)) == 0) {
+		if (temps%(5*(10-tabMinion[0].speed)) == 0) {
 			if (creatingMinions) {
 				tabMinion[minionToCreate].create(gamePanel.p.path);
 				minionToCreate++;
