@@ -100,7 +100,7 @@ public class GamePanel extends JPanel implements MouseListener,MouseMotionListen
 		for (int i=0; i<tabCase.length; i++) {
 			for (int j=0; j<tabCase[0].length; j++) {
 				/*Set a tower in a case of the panel*/
-				if (x > (int)(tabCase[i][j].getX()) && x < (int)(tabCase[i][j].getX())+TAILLE_CASE && y> (int)(tabCase[i][j].getY()) && y< (int)(tabCase[i][j].getY())+TAILLE_CASE && td.interf.numTowerChosen!=-1 && !tabCase[i][j].towerIsActive ){
+				if (x > (int)(tabCase[i][j].getX()) && x < (int)(tabCase[i][j].getX())+TAILLE_CASE && y> (int)(tabCase[i][j].getY()) && y< (int)(tabCase[i][j].getY())+TAILLE_CASE && td.interf.numTowerChosen!=-1 && !tabCase[i][j].towerIsActive && !tabCase[i][j].path ){
 					if (td.money >= td.selectedTower().price){
 						tabCase[i][j].addTour(td.selectedTower());
 						tabCase[i][j].towerIsActive=true;
