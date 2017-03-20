@@ -29,6 +29,7 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 	TowerDefense td;
 	int numTowerChosen=-1;
 	Image imgPurchasedTower;
+	boolean isDeleteTower;
 	
 	public Interface (int width, int height, String image, TowerDefense td) {
 		
@@ -86,7 +87,7 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 		deleteTower = new JButton("DELETE TOWER");
 		deleteTower.setBounds(150,400,140,80);
 		this.add(deleteTower);
-		sendMinions.addActionListener(this);
+		deleteTower.addActionListener(this);
 		
 		
 		/*Creation of the towers buttons*/
@@ -98,6 +99,7 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 			towerMenu.add(towerTabButton[i]);
 			towerTabButton[i].addMouseListener(this);
 		}
+		
 		
 		
 		/*Creation of the tool to get images*/
@@ -114,6 +116,7 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		
 		if ( e.getSource() == pause ) {
 			if(!isPause) {
 				isPause = true;
@@ -135,7 +138,9 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 				td.nextLevel();
 				td.minionToCreate = 0;
 				td.creatingMinions = true;
-			}		
+			}	
+			isDeleteTower=false;
+			deleteTower.setBackground(null);	
 		}
 		
 		if (e.getSource() == upgradeTower) {
@@ -152,10 +157,15 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 					td.money -= price;
 				}
 			}	
+			isDeleteTower=false;
+			deleteTower.setBackground(null);
 		}
 		
 		if (e.getSource() == deleteTower) {
 			// delete the tower a the last position clicked	
+			this.isDeleteTower=true;
+			deleteTower.setBackground(new Color(30,55,112));
+			System.out.println("delete");
 		}
 			
 		
@@ -185,6 +195,8 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 					towerTabButton[i].setBackground(null);
 				}
 		}
+		isDeleteTower=false;
+		deleteTower.setBackground(null);
 	}
 	
 	public void mouseEntered( MouseEvent e )  {}
