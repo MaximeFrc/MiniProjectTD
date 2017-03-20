@@ -109,22 +109,22 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 		switch (level%4) {
 			case 0 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion4", 500*upgrdHP, 4, "minion1.png");
+				tabMinion[i]= new Minion("Minion4", 500*upgrdHP, 8, "minion1.png");
 			}
 			break;
 			case 1 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion1", 500*upgrdHP, 4, "minion1.png");
+				tabMinion[i]= new Minion("Minion1", 2000*upgrdHP, 1, "minion1.png");
 			}
 			break;
 			case 2 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion2", 500*upgrdHP, 4, "minion1.png");
+				tabMinion[i]= new Minion("Minion2", 1500*upgrdHP, 2, "minion1.png");
 			}
 			break;
 			case 3 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion3", 500*upgrdHP, 4, "minion1.png");
+				tabMinion[i]= new Minion("Minion3", 1000*upgrdHP, 4, "minion1.png");
 			}
 			break;
 		}
@@ -142,7 +142,7 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 			scorePanel.displayScore(score);
 		
 		/* Create new minions */
-		if (temps%10 == 0) {
+		if (temps%(10*(5-tabMinion[0].speed)) == 0) {
 			if (creatingMinions) {
 				tabMinion[minionToCreate].create(gamePanel.p.path);
 				minionToCreate++;
