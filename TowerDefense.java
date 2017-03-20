@@ -109,7 +109,7 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 		switch (level%4) {
 			case 0 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion4", 500*upgrdHP, 8, "minion1.png");
+				tabMinion[i]= new Minion("Minion4", 500*upgrdHP, 8, "minion4.png");
 			}
 			break;
 			case 1 :
@@ -119,12 +119,12 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 			break;
 			case 2 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion2", 1500*upgrdHP, 2, "minion1.png");
+				tabMinion[i]= new Minion("Minion2", 1500*upgrdHP, 2, "minion2.png");
 			}
 			break;
 			case 3 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion3", 1000*upgrdHP, 4, "minion1.png");
+				tabMinion[i]= new Minion("Minion3", 1000*upgrdHP, 4, "minion3.png");
 			}
 			break;
 		}
