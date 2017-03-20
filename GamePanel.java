@@ -88,6 +88,7 @@ public class GamePanel extends JPanel implements MouseListener,MouseMotionListen
 			Shoot sh = td.shootList.get(i);
 			buffer.setColor(sh.colorShoot);
 			buffer.drawLine((int) sh.origineShoot.getX(), (int) sh.origineShoot.getY(), (int) sh.finishShoot.getX(), (int) sh.finishShoot.getY());
+			buffer.setColor(Color.white);
 		}
 		
 		//buffer.fillRect
