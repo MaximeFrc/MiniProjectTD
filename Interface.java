@@ -166,7 +166,6 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 			description.setText("<html> DELETE TOWER : <br> If you click on a tower <br> 80 % of the initial price <br> will be refund. </html>");	
 			this.isDeleteTower=true;
 			deleteTower.setBackground(new Color(30,55,112));
-			//System.out.println("delete");
 		}
 			
 		
