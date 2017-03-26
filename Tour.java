@@ -7,14 +7,14 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 public enum Tour {
-	TOUR1("Tour1", 50, 30, 50, 10.0, "tower1.png", 5, Color.green),
-	TOUR2("Tour2", 50, 30, 50, 10.0, "tower2.png", 5, Color.green),
-	TOUR3("Tour3", 50, 30, 50, 10.0, "tower3.png", 5, Color.green),
-	TOUR4("Tour4", 50, 30, 50, 10.0, "tower4.png", 5, Color.green),
-	TOUR5("Tour5", 50, 30, 50, 10.0, "tower5.png", 5, Color.green),
-	TOUR6("Tour6", 50, 30, 50, 10.0, "tower6.png", 5, Color.green),
-	TOUR7("Tour7", 50, 30, 50, 10.0, "tower7.png", 5, Color.green),
-	TOUR8("Tour8", 50, 30, 50, 10.0, "tower8.png", 5, Color.green);
+	TOUR1("Tour1", 100, 200, 300, 25.0, "tower1.png", 2, Color.red),
+	TOUR2("Tour2", 200, 400, 600, 50.0, "tower2.png", 3, Color.green),
+	TOUR3("Tour3", 400, 800, 1200, 150.0, "tower3.png", 2, Color.orange),
+	TOUR4("Tour4", 800, 1600, 2400, 300.0, "tower4.png", 3, Color.blue),
+	TOUR5("Tour5", 2000, 4000, 6000, 800.0, "tower5.png", 2, Color.cyan),
+	TOUR6("Tour6", 2500, 5000, 7500, 800.0, "tower6.png", 4, Color.lightGray),
+	TOUR7("Tour7", 4000, 8000, 12000, 1000.0, "tower7.png", 3, Color.darkGray),
+	TOUR8("Tour8", 6000, 12000, 18000, 1300.0, "tower8.png", 5, Color.black);
 	
 	public String name;
 	public double power;

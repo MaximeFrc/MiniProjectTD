@@ -11,6 +11,7 @@ public class GamePanel extends JPanel implements MouseListener,MouseMotionListen
 	
 	Graphics buffer; 
 	Image wallpaper;
+	Image gameover;
 	BufferedImage background;
 	int widthGP;
 	int heightGP;
@@ -40,6 +41,13 @@ public class GamePanel extends JPanel implements MouseListener,MouseMotionListen
 		}
 		
 		p= new Path(numPath,tabCase);
+		
+		try {
+			gameover = ImageIO.read(new File("gameover.png"));
+		} catch(Exception err) {
+			System.out.println("gameover.png not found !");            
+			System.exit(0);    
+		}
 
 		
 		/*Creation of the tool to get images*/
@@ -82,6 +90,8 @@ public class GamePanel extends JPanel implements MouseListener,MouseMotionListen
 		for (int i = 0; i<td.tabMinion.length ; i++) {
 			if (td.tabMinion[i].position != null) {
 				buffer.drawImage(td.tabMinion[i].img,(int) td.tabMinion[i].getX(),(int) td.tabMinion[i].getY(), TAILLE_CASE, TAILLE_CASE,  this);
+				buffer.setColor(Color.green);
+				buffer.drawRect((int) td.tabMinion[i].getX(), (int) td.tabMinion[i].getY(), (int) ((td.tabMinion[i].HP*TAILLE_CASE)/td.tabMinion[i].initialHP) , 2);
 			}
 		}
 		for(int i = 0; i < td.shootList.size(); i++) {
@@ -89,6 +99,9 @@ public class GamePanel extends JPanel implements MouseListener,MouseMotionListen
 			buffer.setColor(sh.colorShoot);
 			buffer.drawLine((int) sh.origineShoot.getX(), (int) sh.origineShoot.getY(), (int) sh.finishShoot.getX(), (int) sh.finishShoot.getY());
 			buffer.setColor(Color.white);
+		}
+		if (td.nbLives<=0) {
+			buffer.drawImage(gameover, 0, 0, widthGP, heightGP, this);
 		}
 		
 		//buffer.fillRect

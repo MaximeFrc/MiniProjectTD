@@ -46,6 +46,7 @@ public class Case {
 			}
 			this.tour = null;
 			thereIsTower=false;
+			towerIsActive=false;
 		}
 	}
 	
