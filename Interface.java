@@ -43,7 +43,7 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 		/*Interface initialisation */
 		this.setBounds(width-widthITF,100,widthITF,heightITF);
 		this.setLayout(null);
-		this.setBackground(Color.red);
+		//this.setBackground(Color.red);
 		
 		/*Tower Menu initialisation*/
 		towerMenu = new JPanel();
@@ -182,7 +182,10 @@ public class Interface extends JPanel implements ActionListener,MouseListener{
 	
 	public void mousePressed(MouseEvent e) {
 		for(int i=0; i<towerTabButton.length;i++) {
-				if(numTowerChosen==-1 && towerTabButton[i] == e.getSource()){
+				if(towerTabButton[i] == e.getSource()){
+					if (numTowerChosen != -1) {
+						towerTabButton[numTowerChosen-1].setBackground(null);
+					}
 					towerTabButton[i].setBackground(new Color(30,55,112));
 					numTowerChosen =i+1;
 					try {

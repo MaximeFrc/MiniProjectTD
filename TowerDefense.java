@@ -199,13 +199,7 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
     }
     
     public void mouseEntered( MouseEvent e )  {}
-	public void mouseDragged( MouseEvent e ) {
-		//condition si c'est sur les boutons
-		ximg = (int)(e.getPoint().getX()+this.getLocationOnScreen().getX()); //ajouter coord par rapport à l'écran
-		yimg = (int)(e.getPoint().getY()+this.getLocationOnScreen().getY());
-		
-		System.out.println("x : "+ximg+" y : "+yimg);
-	}
+	public void mouseDragged( MouseEvent e ) {}
 	public void mousePressed (MouseEvent e) {}
 	public void mouseClicked (MouseEvent e) {}
 	public void mouseReleased (MouseEvent e) {}
