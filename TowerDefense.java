@@ -107,16 +107,16 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 		/*tabMinion initialisation*/
 		tabMinion = new Minion[9+level];
 		
-		double upgrdHP = level+(0.5*difficulty);
+		double upgrdHP = Math.pow(2,0.4*(level+(0.2*difficulty)));
 		switch (level%4) {
 			case 0 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion4", 1200*upgrdHP, 8, "minion4.png");
+				tabMinion[i]= new Minion("Minion4", 900*upgrdHP, 8, "minion4.png");
 			}
 			break;
 			case 1 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion1", 2000*upgrdHP, 2, "minion1.png");
+				tabMinion[i]= new Minion("Minion1", 1200*upgrdHP, 4, "minion1.png");
 			}
 			break;
 			case 2 :
@@ -126,7 +126,7 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 			break;
 			case 3 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion3", 1000*upgrdHP, 8, "minion3.png");
+				tabMinion[i]= new Minion("Minion3", 700*upgrdHP, 8, "minion3.png");
 			}
 			break;
 		}
@@ -182,7 +182,7 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 							shootList.add(sh);
 							if (sh.killingShoot) {
 								score += 10 * level;
-								money += 10 + 2*level;
+								money += 10 + 5*level;
 							}
 							
 							break;
