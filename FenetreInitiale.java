@@ -1,10 +1,10 @@
 /**
- * La fenêtre principale pour sélectionner les courbes à étudier
- * et pour créer les deux autres fenêtres
+ * The class FentreInitiale that inherits from JFrame and implements ActionListener to choose the difficulty and the path
+ * and create the window TowerDefense
  * 
  */
 
-// Chargement des bibliothèques Swing et AWT
+// Load libraries Swing and AWT
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,39 +12,46 @@ import java.awt.image.*;
 
 public class FenetreInitiale extends JFrame implements ActionListener {
 	
+	// Attributes
+	
 	private JButton monBoutonPath1;
 	private JButton monBoutonPath2;
 	private JButton monBoutonPath3;
 	private JButton monBoutonPath4;
 	private JComboBox boxNiveau;
 	
+	//Methodes
+	
+	/**
+	 * The construtor
+	 * Use three Jpanel to store
+	 * the buttons and comboBox
+	 */
 	public FenetreInitiale(){
-		this.setTitle("TD SCAN 2017");
+		
+		super("TD SCAN 2017");
 		this.setLayout(null);
 		this.setSize(600,600);
-		// Pour placer la fenêtre au centre de l'écran
-		//~ this.setLocationRelativeTo(null);
 		this.setLocation(300,50);
-		// Pour empêcher le redimensionnement de la fenêtre
 		this.setResizable(false);
-		// Pour rendre la fenêtre visible
 		this.setVisible(true);
-		// Pour permettre la fermeture de la fenêtre lors de l'appui sur la croix rouge
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		/**
-		 * Mon panneau 1
+		 * panel 1
 		 */
 		JPanel panneauChoix = new JPanel();
 		panneauChoix.setBounds(40,160,520,40);
 		panneauChoix.setLayout(null);
 		
+		/* label texte 1 */
 		JLabel affTest = new JLabel();
 		affTest.setText("Choose the difficulty \n");
 		affTest.setForeground(Color.white);
 		affTest.setBounds(155,10,150,20);
 		panneauChoix.add(affTest);
 		
+		/* comboBox 1 */
 		String[] niveau = new String[3];
 		niveau[0] = "easy";
 		niveau[1] = "normal";
@@ -54,19 +61,20 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 		boxNiveau.setBounds(320,10,100,20);
 		panneauChoix.add(boxNiveau);
 		
-		/* Image de fond */
+		/* background panel 1 */
 		JLabel fondChoix ;
 		fondChoix = new JLabel(new ImageIcon("fondPanel.jpg"));
 		fondChoix.setBounds(0,0,520,40);
 		panneauChoix.add(fondChoix);
 		
 		/**
-		 * Mon panneau 2
+		 * panel 2
 		 */
 		JPanel panneauBouton = new JPanel();
 		panneauBouton.setBounds(50,210,500,350);
 		panneauBouton.setLayout(null);
 		
+		/* button 1 */
 		monBoutonPath1 = new JButton();
 		monBoutonPath1.setBounds(10,10,235,160);
 		monBoutonPath1.setBackground(Color.black);
@@ -75,6 +83,7 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 		monBoutonPath1.add(fondPath1);
 		panneauBouton.add(monBoutonPath1);
 		
+		/* button 2 */
 		monBoutonPath2 = new JButton();
 		monBoutonPath2.setBounds(255,10,235,160);
 		monBoutonPath2.setBackground(Color.black);
@@ -83,6 +92,7 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 		monBoutonPath2.add(fondPath2);
 		panneauBouton.add(monBoutonPath2);
 		
+		/* button 3 */
 		monBoutonPath3 = new JButton();
 		monBoutonPath3.setBounds(10,180,235,160);
 		monBoutonPath3.setBackground(Color.black);
@@ -91,6 +101,7 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 		monBoutonPath3.add(fondPath3);
 		panneauBouton.add(monBoutonPath3);
 		
+		/* button 4 */
 		monBoutonPath4 = new JButton();
 		monBoutonPath4.setBounds(255,180,235,160);
 		monBoutonPath4.setBackground(Color.black);
@@ -99,28 +110,33 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 		monBoutonPath4.add(fondPath4);
 		panneauBouton.add(monBoutonPath4);
 		
-		/* Image de fond */
+		/* background panel 2 */
 		JLabel fondBouton ;
 		fondBouton = new JLabel(new ImageIcon("fondPanel.jpg"));
 		fondBouton.setBounds(0,0,500,350);
 		panneauBouton.add(fondBouton);
 		
 		/**
-		 * Mon panneau Global
+		 * Global panel
 		 */
 		JPanel panneauGlobal = new JPanel();
 		panneauGlobal.setBounds(0,0,600,600);
 		panneauGlobal.setLayout(null);
-		/* Image de fond */
+		
+		/* background Global panel */
 		JLabel fondGlobal ;
 		fondGlobal = new JLabel(new ImageIcon("fondGlobal.png"));
 		fondGlobal.setBounds(0,0,600,600);
-		/* Image de titre */
+		
+		/* Title image */
 		JLabel titre ;
 		titre = new JLabel(new ImageIcon("titre.png"));
 		titre.setBounds(0,0,600,160);
 		
-		//panneauGlobal.setBackground(Color.yellow);
+		/**
+		 * put every panels in
+		 * the Glabal panel
+		 */
 		panneauGlobal.add(panneauChoix);
 		panneauGlobal.add(panneauBouton);
 		panneauGlobal.add(titre);
@@ -128,6 +144,7 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 		
 		this.setContentPane(panneauGlobal);
 
+		/* add a listener to the buttons */
 		monBoutonPath1.addActionListener(this);
 		monBoutonPath2.addActionListener(this);
 		monBoutonPath3.addActionListener(this);
@@ -135,6 +152,10 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 		
 	}
 	
+	/**
+	 * The method to act when a button is clicked
+	 * @param e : ActionEvent corresponding to the button clicked
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == monBoutonPath1) 
 			new TowerDefense(1,boxNiveau.getSelectedIndex());
@@ -147,7 +168,8 @@ public class FenetreInitiale extends JFrame implements ActionListener {
 
 		if (e.getSource() == monBoutonPath4) 
 			new TowerDefense(4,boxNiveau.getSelectedIndex());
-		this.dispose();
+			
+		this.dispose(); // close this window
 	}
 
 }

@@ -1,3 +1,10 @@
+/**
+ * The class TowerDefense that inherits from JFrame and implements ActionListener and MouseMotionListener 
+ * to create the window TowerDefense
+ * 
+ */
+
+// Load libraries
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -6,46 +13,48 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.ArrayList;
 
-public class TowerDefense extends JFrame implements ActionListener,MouseListener,MouseMotionListener{
+public class TowerDefense extends JFrame implements ActionListener,MouseMotionListener{
 	
-	/*Parameters of the window*/
-	int width = 1008;
-	int height = 706;
+	//Attributes
 	
-	/* Components of the window*/
-	JPanel mainPanel;
-	Interface interf;
-	GamePanel gamePanel;
-	ScorePanel scorePanel;
+	/* Parameters of the window */
+	public int width = 1008;
+	public int height = 706;
 	
-	//JPanel purchasedTower;
+	/* Components of the window */
+	public JPanel mainPanel;
+	public Interface interf;
+	public GamePanel gamePanel;
+	public ScorePanel scorePanel;
 	
+	/* Timer */
+	public Timer timer;
+	public int temps =0;
 	
-	/*Timer */
-	Timer timer;
-	int temps =0;
+	/* Parameters to play */
+	public int level;
+	public int nbLives;
+	public int money;
+	public int score;
+	public int difficulty;
+	public int ximg;
+	public int yimg;
+	public int minionToCreate;
+	public int buttonPressed;
+	public boolean creatingMinions;
+	public Tour chosenTower;
+	public Minion tabMinion [];
+	public ArrayList<Shoot> shootList;
 	
-	/*Parameters to play*/
-	Minion tabMinion [];
-	int level;
-	int nbLives;
-	int money;
-	int score;
-	boolean creatingMinions;
-	int minionToCreate;
-	Tour chosenTower;
-	ArrayList<Shoot> shootList;
-	int difficulty;
-	
-	int buttonPressed;
-	
-	int ximg;
-	int yimg;
+	//Methodes
 
-	
+	/**
+	 * The construtor
+	 * @param path : int that comes from the the buttons clicked on FenetreInitiale
+	 * @param difficulty : int that comes from the comboBox on the FenetreInitiale
+	 */	
 	public TowerDefense (int path, int difficulty) {
 		
-
 		/*Window creation*/
 		super("TOWER DEFENSE");
 		setSize(width,height);
@@ -62,9 +71,8 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 		this.difficulty = difficulty;
 		creatingMinions = false;
 		shootList = new ArrayList();
-		tabMinion = new Minion[1];
-		tabMinion[0] = new Minion("Minion1", 500, 4, "minion1.png");;
-		
+		tabMinion = new Minion[1]; //to initialize the game even if this minion won't appear
+		tabMinion[0] = new Minion("Minion1", 500, 4, "minion1.png");
 		
 		/*Main Panel initialisation*/
 		mainPanel = new JPanel();
@@ -89,29 +97,25 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 		timer = new Timer (50, this);
 		timer.start();
 		
-		/*Test de tour*/
-		chosenTower=Tour.TOUR1;
-		
-		
-		this.addMouseMotionListener(this);
+		/* add listeners to the mouse*/
 		gamePanel.addMouseMotionListener(this);
-		for(int i=0; i<interf.towerTabButton.length;i++) {
-			interf.towerTabButton[i].addMouseMotionListener(this);
-		}
-		
 	}
 	
+	/**
+	 * The method nextLevel to begin a new level
+	 * called by the button sendMinions int Interface
+	 */
 	public void nextLevel() {
 		level++;
 		
 		/*tabMinion initialisation*/
 		tabMinion = new Minion[9+level];
 		
-		double upgrdHP = Math.pow(2,0.4*(level+(0.2*difficulty)));
+		double upgrdHP = Math.pow(2,0.4*(level+(0.2*difficulty))); //HP depends on the level we play on
 		switch (level%4) {
 			case 0 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion4", 900*upgrdHP, 8, "minion4.png");
+				tabMinion[i]= new Minion("Minion4", 800*upgrdHP, 8, "minion4.png");
 			}
 			break;
 			case 1 :
@@ -126,20 +130,26 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 			break;
 			case 3 :
 			for (int i = 0; i<tabMinion.length ; i++) {
-				tabMinion[i]= new Minion("Minion3", 700*upgrdHP, 8, "minion3.png");
+				tabMinion[i]= new Minion("Minion3", 600*upgrdHP, 8, "minion3.png");
 			}
 			break;
 		}
 	}
 			
-	
-	
+	/**
+	 * The method to act when the timer is running
+	 * @param e : ActionEvent corresponding to a new iteration of the timer
+	 */
 	public void actionPerformed(ActionEvent e) {
 		scorePanel.displayLives(nbLives);
-		if (nbLives<=0) {
+		
+		/* end the game */
+		if (nbLives<=0) { 
 			interf.isPause = false;
 		}  
-		if(interf.isPause) {
+		
+		/* update the game */
+		if(interf.isPause) { 
 			temps++; 
 			scorePanel.displayTime(temps);
 			scorePanel.displayWave(level);
@@ -182,7 +192,7 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 							shootList.add(sh);
 							if (sh.killingShoot) {
 								score += 10 * level;
-								money += 10 + 5*level;
+								money += 10 + 8*level;
 							}
 							
 							break;
@@ -192,26 +202,24 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 				}
 			}
 		}
-		
-			//scorePanel.displayScore(Player.score);
 			repaint();
 		}
     }
-    
-    public void mouseEntered( MouseEvent e )  {}
-	public void mouseDragged( MouseEvent e ) {}
-	public void mousePressed (MouseEvent e) {}
-	public void mouseClicked (MouseEvent e) {}
-	public void mouseReleased (MouseEvent e) {}
-	public void mouseExited (MouseEvent e) {}
-	public void mouseMoved( MouseEvent e ) { }
-	
+
+	/**
+	 * The method paintComponent to paint the whole panel
+	 * @param g : Graphics where we draw
+	 */ 
 	public void paintComponent(Graphics g) {
 		g.drawImage(interf.imgPurchasedTower, ximg-(int)this.getLocationOnScreen().getX(), yimg-(int)this.getLocationOnScreen().getY(), this);
 	}
 	
+	/**
+	 * The method selectedTower to select a tower when a button is clicked in the interface
+	 * @return t : Tour we selected
+	 */ 
 	public Tour selectedTower () {
-		Tour t=Tour.TOUR1;
+		Tour t=Tour.TOUR1; //in case we have a problem with the buttons
 		switch (interf.numTowerChosen) {
 			case 1 : t= Tour.TOUR1;
 				break;
@@ -234,5 +242,11 @@ public class TowerDefense extends JFrame implements ActionListener,MouseListener
 		}
 		return t;
 	}
+	
+	
+	/* Overload mouseMotionListener methods */
+	public void mouseDragged( MouseEvent e ) {}
+	public void mouseMoved( MouseEvent e ) {}
+	
 }
 

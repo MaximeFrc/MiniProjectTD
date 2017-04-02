@@ -1,13 +1,25 @@
-
-
+/**
+ * The class Path that describe a path on a GamePanel
+ * by an array of case (type Case)
+ * 
+ */
 
 public class Path {
 	
+	//Attribute
+	
 	public Case [] path;
 	
+	//Methode
+	
+	/**
+	 * The construtor
+	 * @param numPath : int to choose one path of the four
+	 * @param tabCase : Case[][] to define the corners of the path  
+	 */
 	public Path (int numPath, Case[][] tabCase) {
 		switch (numPath) {
-			case 1 :
+			case 1 : //like to the button monBoutonPath1
 			path = new Case [8];
 			path[0] = tabCase [2][0];
 			path[1] = tabCase [2][6];
@@ -18,7 +30,7 @@ public class Path {
 			path[6] = tabCase [20][14];
 			path[7] = tabCase [20][17];
 			break;
-			case 2 :
+			case 2 : //like to the button monBoutonPath2
 			path = new Case [10];
 			path[0] = tabCase [0][2];
 			path[1] = tabCase [19][2];
@@ -31,7 +43,7 @@ public class Path {
 			path[8] = tabCase [6][8];
 			path[9] = tabCase [13][8];
 			break;
-			case 3 :
+			case 3 : //like to the button monBoutonPath3
 			path = new Case [14];
 			path[0] = tabCase [6][0];
 			path[1] = tabCase [6][7];
@@ -48,7 +60,7 @@ public class Path {
 			path[12] = tabCase [6][10];
 			path[13] = tabCase [6][17];
 			break;
-			case 4 :
+			case 4 : //like to the button monBoutonPath4
 			path = new Case [39];
 			path[0] = tabCase [0][7];
 			path[1] = tabCase [8][7];
@@ -56,7 +68,6 @@ public class Path {
 			path[3] = tabCase [3][4];
 			path[4] = tabCase [3][1];
 			path[5] = tabCase [20][1];
-			//path[6] = tabCase [20][1];
 			path[6] = tabCase [14][1];
 			path[7] = tabCase [14][7];
 			path[8] = tabCase [20][7];
@@ -88,11 +99,12 @@ public class Path {
 			path[34] = tabCase [3][13];
 			path[35] = tabCase [7][13];
 			path[36] = tabCase [2][13];
-			//path[37] = tabCase [2][14];
 			path[37] = tabCase [2][16];
 			path[38] = tabCase [0][16];
 			break;
 		}
+		
+		// Define the cases on the path
 		
 		path[0].setPath();
 		for(int i=0; i<(path.length-1); i++) {

@@ -1,6 +1,5 @@
 /*
- *Main class
- * 
+ * The class Jeu that contains the main
  */
 
 public class Jeu {
